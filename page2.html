@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8" />
+<head>
+  <title>paula's startpage :3</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="main.css" />
+  <link rel="icon" type="image/x-icon" href="resources/images/Game.ico" />
+</head>
+<body>
+  <!--<div class="floating-caption">
+        <input type="text" id="floating-caption" name="floating-caption" placeholder="Captions"/>
+    </div>-->
+  <div class="bg-image"></div>
+  <div class="window-bg">
+    <div class="front-img2">
+      <div class="artistcredit">@LUMIEREBELGE</div>
+    </div>
+    <div class="titlediv">
+      <div id="titleb">paula's startpage :3</div>
+      <div id="clock"></div>
+    </div>
+    <div class="windowbackgroundarea1">
+      <div id="Subtitle">I'VE ABANDONED MY CHILD</div>
+    </div>
+    <div class="windowbackgroundarea2">
+      <br />
+      <div class="categorycontent">
+        <a href="index.html" target="_self">-- Home page --</a>
+      </div>
+      <!-- REVISION -->
+      <div class="categorytitle">REVISION</div>
+      <div class="categorycontent">
+        <form id="todo-form" action="/url" method="GET">
+          <input
+            type="text"
+            id="task-input"
+            name="task"
+            placeholder="Input task"
+            minlength="3"
+            maxlength="60"
+            required
+          />
+          <input type="text" id="subject-input" name="subject" placeholder="Subject" />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+
+      <table id="todo-table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; margin-top: 15px;">
+        <thead>
+          <tr>
+            <th>Done</th>
+            <th>Task</th>
+            <th>Subject</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <!-- Undo Button -->
+      <button id="undo-btn" disabled style="margin-top:10px;">Undo Last Task</button>
+    </div>
+
+    <!-- Overlays -->
+    <div class="pixeloverlay"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <script>
+    // CLOCK
+    var clock = document.getElementById("clock");
+    function updateClock() {
+      var date = new Date();
+      date.setHours(date.getHours() + 0);
+      var hours = date.getHours().toString();
+      var minutes = date.getMinutes().toString();
+      var seconds = date.getSeconds().toString();
+      if (hours.length == 1) {
+        hours = "0" + hours;
+      }
+      if (minutes.length == 1) {
+        minutes = "0" + minutes;
+      }
+      if (seconds.length == 1) {
+        seconds = "0" + seconds;
+      }
+      clock.innerHTML = hours + ":" + minutes + ":" + seconds;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // TO-DO SUBMISSION LOGIC
+    const form = document.getElementById("todo-form");
+    const taskInput = document.getElementById("task-input");
+    const subjectInput = document.getElementById("subject-input");
+    const todoTableBody = document.querySelector("#todo-table tbody");
+    const undoBtn = document.getElementById("undo-btn");
+    let lastDeletedTask = null;
+
+    window.addEventListener("DOMContentLoaded", loadTodos);
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault(); // prevents form refresh
+
+      const task = taskInput.value.trim();
+      const subject = subjectInput.value.trim();
+
+      if (task !== "") {
+        const todoItem = {
+          task,
+          subject,
+          completed: false,
+        };
+        addTodoToDOM(todoItem);
+        saveTodo(todoItem);
+
+        form.reset();
+      }
+    });
+
+    function addTodoToDOM(todoItem) {
+      const row = document.createElement("tr");
+
+      // Checkbox cell
+      const checkboxCell = document.createElement("td");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = todoItem.completed;
+      checkbox.addEventListener("change", () => {
+        updateTodoStatus(todoItem, checkbox.checked);
+      });
+      checkboxCell.appendChild(checkbox);
+
+      // Task cell
+      const taskCell = document.createElement("td");
+      taskCell.textContent = todoItem.task;
+
+      // Subject cell
+      const subjectCell = document.createElement("td");
+      subjectCell.textContent = todoItem.subject;
+
+      // Delete button cell
+      const deleteCell = document.createElement("td");
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "🗑️";
+      deleteBtn.style.cursor = "pointer";
+      deleteBtn.addEventListener("click", () => {
+        todoTableBody.removeChild(row);
+        removeTodoFromStorage(todoItem);
+        lastDeletedTask = todoItem;
+        undoBtn.disabled = false;
+      });
+      deleteCell.appendChild(deleteBtn);
+
+      // Append all cells to the row
+      row.appendChild(checkboxCell);
+      row.appendChild(taskCell);
+      row.appendChild(subjectCell);
+      row.appendChild(deleteCell);
+
+      // Add row to table body
+      todoTableBody.appendChild(row);
+    }
+
+    function saveTodo(todoItem) {
+      let todos = JSON.parse(localStorage.getItem("todos")) || [];
+      todos.push(todoItem);
+      localStorage.setItem("todos", JSON.stringify(todos));
+    }
+
+    function loadTodos() {
+      let todos = JSON.parse(localStorage.getItem("todos")) || [];
+      todos.forEach((todoItem) => addTodoToDOM(todoItem));
+    }
+
+    function updateTodoStatus(todoItem, completed) {
+      let todos = JSON.parse(localStorage.getItem("todos")) || [];
+      for (let i = 0; i < todos.length; i++) {
+        if (todos[i].task === todoItem.task && todos[i].subject === todoItem.subject) {
+          todos[i].completed = completed;
+          break;
+        }
+      }
+      localStorage.setItem("todos", JSON.stringify(todos));
+    }
+
+    function removeTodoFromStorage(todoItem) {
+      let todos = JSON.parse(localStorage.getItem("todos")) || [];
+      todos = todos.filter(
+        (t) => !(t.task === todoItem.task && t.subject === todoItem.subject)
+      );
+      localStorage.setItem("todos", JSON.stringify(todos));
+    }
+
+    undoBtn.addEventListener("click", () => {
+      if (lastDeletedTask) {
+        addTodoToDOM(lastDeletedTask);
+        saveTodo(lastDeletedTask);
+        lastDeletedTask = null;
+        undoBtn.disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>

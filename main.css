@@ -1,13 +1,14 @@
 /*Most easy/basic changes can be done up here in the root area, edit the rest if you know what it does.*/
 :root{
---stripebackground:#e2c8d4;         /*The color of the small stripe just under the header*/
---windowbackground: #d0a4af;        /*The color of the background of the main window main area.*/
---maintextcolor:#000;               /*The color of the text in the main area.*/
---headercolor:#fff;                 /*The color of the text in the header/title.*/
---linktextcolor:var(--maintextcolor); /*This line means that the links will have the same color as the normal text in the main area of the window. Change if you want different colors.*/
---backgroundImageUrl:url("resources/images/background.jpg");  /*The URL to the image you want to use as background.*/
---focusImageUrl:url("resources/images/wave.png");   /*The URL to the image you want to use for the foreground.*/
---backgroundBlur:blur(2px);                           /*Change how blurry the background is. Higher number is more blurry.*/
+--stripebackground:#383b46;         /*The color of the small stripe just under the header*/
+--windowbackground: #302528;        /*The color of the background of the main window main area.*/
+--maintextcolor:#ffffff;               /*The color of the text in the main area.*/
+--headercolor:#ffffff;                 /*The color of the text in the header/title.*/
+--linktextcolor:rgb(184, 217, 161); /*This line means that the links will have the same color as the normal text in the main area of the window. Change if you want different colors.*/
+--backgroundImageUrl:url("https://i.4cdn.org/wg/1743385732133515.jpg");  /*The URL to the image you want to use as background.*/
+--focusImageUrl:url("https://pbs.twimg.com/media/GijMkVMWQAAFq4L?format=jpg&name=4096x4096");   /*The URL to the image you want to use for the foreground.*/
+--focusImageUrl2:url("https://pbs.twimg.com/media/GqreaW_WkAAF5ki?format=jpg&name=4096x4096");
+--backgroundBlur:blur(0px);                           /*Change how blurry the background is. Higher number is more blurry.*/
 --backgroundBorder:#000;                           /*If you have a blurry background, set the color of the border around the image to fit it here.*/
 --letterSpace:2px;                                    /*Define how far letters are spaced from each other in pixels.*/
 /* The font style doesn't seem to work as variable defined here. If you want to change the font, scroll to the bottom of the document to change the path.*/
@@ -34,11 +35,12 @@
     background-image: var(--backgroundImageUrl);
     filter: var(--backgroundBlur);
     -webkit-filter: var(--backgroundBlur);
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    height: 200%;
+    background-position: top left;
+    background-repeat: repeat-y;
+    background-size: 150%;
 }
+
 .window-bg {
     background-image: url("resources/images/window.png");
     height: 485px;
@@ -52,10 +54,10 @@
     transform: translate(-50%, -50%);
 }
 #clock{
-  text-align: right;
-  position: relative;
-  top: 3px;
-  right: 5px;
+    text-align: right;
+    position: relative;
+    top: 3px;
+    right: 5px;
 }
 .centerDivs{
   display: table;
@@ -74,6 +76,24 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+.front-img2{
+  position: inherit;
+  width: 339px;
+  height: 446px;
+  left:5px;
+  top:34px;
+  background-image:var(--focusImageUrl2);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.artistcredit{
+  font-size:smaller;
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  color:#9d8ea1;
 }
 .titlediv{
   font-size: var(--windowtitlefontsize);
@@ -98,6 +118,11 @@
   text-align: left;
   width: 100%;
 }
+
+a:focus,a:hover {
+  color:rgb(255, 127, 127);
+}
+
 .windowbackgroundarea1{
   position: inherit;
   width: 606px;
@@ -124,7 +149,8 @@
 }
 .categorytitle{
   font-size: var(--categorytitlefontsize);
-  font-weight: normal;
+  font-weight: bolder;
+  font-style:italic;
   width:605px;
   text-align: center;
   position: relative;
@@ -164,10 +190,10 @@ a{
   margin-right: 5px;
   margin-top: 10px;
   text-decoration: none;
-  color:var(--linktextcolor)
+  color:var(--linktextcolor);
 }
 body, html {
-    height: 100%;
+    height: 130%;
     margin: 0;
     font-family: w95;
     color:var(--maintextcolor);
@@ -178,4 +204,231 @@ body, html {
   @font-face {
     font-family: "w95";
     src: url('resources/style/w95fa.woff');
+}
+#cb1 {
+  accent-color: #674972;
+  text-align: center;
+}
+
+/* TO DO */
+#todo-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    #todo-table th,
+    #todo-table td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: middle;
+    }
+    #todo-table thead {
+      background-color: #302528;
+    }
+    /* Checkbox cell: center align */
+    #todo-table td:first-child {
+      text-align: center;
+      width: 60px;
+    }
+    /* Delete button styling */
+    #todo-table button {
+      cursor: pointer;
+      background: #434056;
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+    #todo-table button:hover {
+      background: #846060;
+    }
+
+/* CAPTION */
+.floating-caption {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 600px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  z-index: 9999;
+}
+
+.floating-caption input[type="text"] {
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 12px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: white;
+  color: black;
+}
+
+
+
+/* C A L E N D A R */
+
+ul {list-style-type: none;}
+
+
+.month {
+  padding: 30px 25px;
+  width: 95%;
+  background: #37454e;
+  text-align: center;
+}
+
+.calendar-container {
+  position: absolute;
+  top: calc(60% + 250px); /* Adjust 250px depending on your .window-bg height */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 960px; /* Match your main box width */
+  padding: 20px;
+  background-color: #374454; /* Match or complement your .month background */
+  border: 2px solid #37454e; /* Match stripe background or similar */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  color: white;
+  z-index: 1;
+}
+
+#calendar-june {
+  position: absolute;
+  top: calc(60% + 650px); /* Adjust 250px depending on your .window-bg height */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 960px; /* Match your main box width */
+  padding: 20px;
+  background-color: #374454; /* Match or complement your .month background */
+  border: 2px solid #37454e; /* Match stripe background or similar */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  color: white;
+  z-index: 1;
+}
+
+.month ul {
+  margin: 0;
+  padding: 0;
+}
+
+.month ul li {
+  color: white;
+  font-size: 30px;
+  font-weight: bolder;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.month .prev {
+  float: left;
+  padding-top: 10px;
+}
+
+.month .next {
+  float: right;
+  padding-top: 10px;
+}
+
+.weekdays {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #c8c9cf;
+}
+
+.weekdays li {
+  display: inline-block;
+  width: 13.6%;
+  color: #666;
+  text-align: center;
+}
+
+.days {
+  padding: 10px 0;
+  background: #dddddd;
+  margin: 0;
+}
+
+.days li {
+  list-style-type: none;
+  display: inline-block;
+  width: 13.6%;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size:12px;
+  color: #777;
+  position: relative;
+}
+
+/* PRODUCTIVE DAY BOX */
+
+.prod-day-box {
+    position: relative;
+    display: inline-block;
+}
+
+.prod-day-box .hide {
+  display: none;
+  position: absolute;
+  top: 100%; /* Place below the number */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.prod-day-box .active {
+  padding: 5px;
+  background: #374454;
+  color: white;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+#important-date .active {
+  padding:5px;
+  background: #7d3b3b;
+  color: white;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+#important-date-big .active {
+  padding:5px;
+  background: #7d3b3b;
+  color: white;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Show the label on hover */
+.prod-day-box:hover .hide {
+  display: block;
+}
+
+/* Add media queries for smaller screens */
+@media screen and (max-width:720px) {
+  .weekdays li, .days li {width: 13.1%;}
+}
+
+@media screen and (max-width: 420px) {
+  .weekdays li, .days li {width: 12.5%;}
+  .days li .active {padding: 2px;}
+}
+
+@media screen and (max-width: 290px) {
+  .weekdays li, .days li {width: 12.2%;}
 }
