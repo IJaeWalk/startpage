@@ -16,8 +16,8 @@
 /* These are the font sizes for every element with text respectively:*/
 --windowtitlefontsize:17px;           /*Font size used by the window title and clock*/
 --windowsubtitlefontsize:17px;        /*Font size used by the subtitle*/
---categorytitlefontsize:25px;         /*Font size used by the category titles*/
---categorycontentfontsize:15px;       /*Font size used by the category contents*/
+--categorytitlefontsize:35px;         /*Font size used by the category titles*/
+--categorycontentfontsize:30px;       /*Font size used by the category contents*/
 
 /* The following settings are for the pixel overlay effect:*/
 --pixeloverlay-exists:visible;        /*Activate or deactivate the "pixel effect" overlay. Set to 'visible' to activate, set to 'hidden' to deactivate. When set to 'hidden' the other settings in this category don't matter.*/
